@@ -35,7 +35,7 @@ data = data.fillna(0)
 #%% Test train split
 train, test = train_test_split(
     data,
-    test_size=0.33,
+    test_size=0.3,
     random_state=0)
 
 
@@ -102,103 +102,163 @@ data_feature_selected = pd.concat([data[features_we_like], data['Violent_Crimes_
 
 #%% Dimensional reduction with standard PCA
 
-from sklearn.decomposition import PCA
-from sklearn.linear_model import LinearRegression
+# from sklearn.decomposition import PCA
+# from sklearn.linear_model import LinearRegression
 
-num_of_features = data_feature_selected.shape[1]
+# num_of_features = data_feature_selected.shape[1]
 
-results_of_pca = []
+# results_of_pca = []
 
-for i in range(1,num_of_features):
+# for i in range(1,num_of_features):
     
-    pca = PCA(i)
+#     pca = PCA(i)
     
-    data_pca = pca.fit_transform(data_feature_selected.drop(columns=['Violent_Crimes_Per_1000'], axis=1))
+#     data_pca = pca.fit_transform(data_feature_selected.drop(columns=['Violent_Crimes_Per_1000'], axis=1))
     
-    pca_beta = pca.components_
+#     pca_beta = pca.components_
     
-    train, test = train_test_split(
-        data_feature_selected,
-        # data.drop(columns=['Violent_Crimes_Per_1000'], axis=1),
-        # data['Violent_Crimes_Per_1000'],
-        # data_pca,
-        # data.target,
-        test_size=0.3,
-        random_state=0)
+#     train, test = train_test_split(
+#         data_feature_selected,
+#         # data.drop(columns=['Violent_Crimes_Per_1000'], axis=1),
+#         # data['Violent_Crimes_Per_1000'],
+#         # data_pca,
+#         # data.target,
+#         test_size=0.3,
+#         random_state=0)
     
-    X_train = train.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
-    y_train = train['Violent_Crimes_Per_1000']
-    X_test = test.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
-    y_test = test['Violent_Crimes_Per_1000']
+#     X_train = train.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
+#     y_train = train['Violent_Crimes_Per_1000']
+#     X_test = test.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
+#     y_test = test['Violent_Crimes_Per_1000']
     
-    lr = LinearRegression()
-    lr.fit(X_train, y_train)
-    y_predict = lr.predict(X_test)
+#     lr = LinearRegression()
+#     lr.fit(X_train, y_train)
+#     y_predict = lr.predict(X_test)
     
-    results_of_pca.append([i, r2_score(y_test, y_predict)])
+#     results_of_pca.append([i, r2_score(y_test, y_predict)])
 
-results_of_pca = np.array(results_of_pca)
+# results_of_pca = np.array(results_of_pca)
 
-fig = plt.figure()
-plt.plot(results_of_pca[:,0], results_of_pca[:,1])
+# fig = plt.figure()
+# plt.plot(results_of_pca[:,0], results_of_pca[:,1])
     
     
     
 #%%  
     
-from sklearn.decomposition import NMF
-from sklearn.linear_model import LinearRegression
+# from sklearn.decomposition import NMF
+# from sklearn.linear_model import LinearRegression
 
-num_of_features = data_feature_selected.shape[1]
+# num_of_features = data_feature_selected.shape[1]
 
-results_of_nmf = []
+# results_of_nmf = []
 
-for i in range(1,num_of_features):
+# for i in range(1,num_of_features):
     
-    nmf = NMF(i)
+#     nmf = NMF(i)
     
-    data_nmf = nmf.fit_transform(data_feature_selected.drop(columns=['Violent_Crimes_Per_1000'], axis=1))
+#     data_nmf = nmf.fit_transform(data_feature_selected.drop(columns=['Violent_Crimes_Per_1000'], axis=1))
     
-    nmf_beta = nmf.components_
+#     nmf_beta = nmf.components_
     
-    train, test = train_test_split(
-        data_feature_selected,
-        # data.drop(columns=['Violent_Crimes_Per_1000'], axis=1),
-        # data['Violent_Crimes_Per_1000'],
-        # data_pca,
-        # data.target,
-        test_size=0.3,
-        random_state=0)
+    # train, test = train_test_split(
+    #     data_feature_selected,
+    #     # data.drop(columns=['Violent_Crimes_Per_1000'], axis=1),
+    #     # data['Violent_Crimes_Per_1000'],
+    #     # data_pca,
+    #     # data.target,
+    #     test_size=0.3,
+    #     random_state=0)
     
-    X_train = train.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
-    y_train = train['Violent_Crimes_Per_1000']
-    X_test = test.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
-    y_test = test['Violent_Crimes_Per_1000']
-    # X_train = np.nan_to_num(X_train)
-    # X_test = np.nan_to_num(X_test)
+    # X_train = train.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
+    # y_train = train['Violent_Crimes_Per_1000']
+    # X_test = test.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
+    # y_test = test['Violent_Crimes_Per_1000']
+#     # X_train = np.nan_to_num(X_train)
+#     # X_test = np.nan_to_num(X_test)
     
-    lr = LinearRegression()
-    lr.fit(X_train, y_train)
-    y_predict = lr.predict(X_test)
+#     lr = LinearRegression()
+#     lr.fit(X_train, y_train)
+#     y_predict = lr.predict(X_test)
     
-    results_of_nmf.append([i, r2_score(y_test, y_predict)])
+#     results_of_nmf.append([i, r2_score(y_test, y_predict)])
 
-results_of_nmf = np.array(results_of_nmf)
+# results_of_nmf = np.array(results_of_nmf)
+
+# fig = plt.figure()
+# plt.plot(results_of_nmf[:,0], results_of_nmf[:,1])   
+    
+    
+#%% Gradient Boosting
+
+from sklearn.ensemble import GradientBoostingRegressor
+
+
+
+train, test = train_test_split(
+    data_feature_selected,
+    # data.drop(columns=['Violent_Crimes_Per_1000'], axis=1),
+    # data['Violent_Crimes_Per_1000'],
+    # data_pca,
+    # data.target,
+    test_size=0.3,
+    random_state=0)
+
+X_train = train.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
+y_train = train['Violent_Crimes_Per_1000']
+X_test = test.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
+y_test = test['Violent_Crimes_Per_1000']
+
+gbr = GradientBoostingRegressor(
+    learning_rate = .15,
+    n_estimators = 1000,
+    max_depth = 3,
+    # criterion = "mse",
+    random_state=0)
+gbr.fit(X_train, y_train)
+y_predict = gbr.predict(X_test)
+print(r2_score(y_test, y_predict))
 
 fig = plt.figure()
-plt.plot(results_of_nmf[:,0], results_of_nmf[:,1])   
+plt.xlim(0,10)
+plt.ylim(0,10)
+plt.scatter(test['Violent_Crimes_Per_1000'], y_predict)
+
     
+#%% Bagggings
+# from sklearn.ensemble import BaggingRegressor
+
+
+# train, test = train_test_split(
+#     data_feature_selected,
+#     # data.drop(columns=['Violent_Crimes_Per_1000'], axis=1),
+#     # data['Violent_Crimes_Per_1000'],
+#     # data_pca,
+#     # data.target,
+#     test_size=0.3,
+#     random_state=0)
+
+# X_train = train.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
+# y_train = train['Violent_Crimes_Per_1000']
+# X_test = test.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
+# y_test = test['Violent_Crimes_Per_1000']
+
+
+
+# br = BaggingRegressor(
+#     # max_samples = 10,
+#     max_features = X_train.shape[1] - 5,
+#     random_state = 0 
+#     )
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+# br.fit(X_train, y_train)
+# y_predict = br.predict(X_test)
+# print(r2_score(y_test, y_predict))
+
+# fig = plt.figure()
+# plt.xlim(0,10)
+# plt.ylim(0,10)
+# plt.scatter(test['Violent_Crimes_Per_1000'], y_predict)
     
     
     
