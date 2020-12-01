@@ -2,20 +2,45 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import Lasso, LogisticRegression
-from sklearn.feature_selection import SelectFromModel
-from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import GradientBoostingRegressor
 
 from sklearn.metrics import r2_score
 
-
-# from sklearn.datasets import load_breast_cancer
 from data_load import load_crime_education_data
 
+#%% Function Definition
+
+def gradient_boosting(X_train, y_train, X_test, y_test, title = ''):
+    # this function takes in the train and test sets and a title to fit a gradient
+    # boosted model
+    
+    gbr = GradientBoostingRegressor(
+        learning_rate = .15,
+        n_estimators = 1000,
+        max_depth = 3,
+        random_state=0)
+    gbr.fit(X_train, y_train)
+    y_predict = gbr.predict(X_test)
+    r2 = r2_score(y_test, y_predict)
+    # print()
+    
+    fig = plt.figure()
+    plt.xlim(0,10)
+    plt.ylim(0,10)
+    plt.scatter(test['Violent_Crimes_Per_1000'], y_predict)
+    plt.xlabel("Crime Rate per 1000")
+    plt.ylabel("Predicted Crime Rate per 1000")
+    plt.title("Gradient Boost: %s" % title)
+    
+    return r2
+
 #%% Load Data
-data = load_crime_education_data(5)
+
+# for year_delay in range(0,9):
+year_delay = 1
+data = load_crime_education_data(year_delay)
 
 #%%
 
@@ -100,7 +125,7 @@ plt.title("Lasso")
 #%%
 
 data_feature_selected = pd.concat([data[features_we_like], data['Violent_Crimes_Per_1000']], axis=1)
-
+# data_feature_selected = data
 
 #%% Dimensional reduction with standard PCA
 
@@ -110,6 +135,9 @@ from sklearn.linear_model import LinearRegression
 num_of_features = data_feature_selected.shape[1] - 1
 
 results_of_pca = []
+best_pca_model = None
+best_pca_data = None
+best_r2_pca = 0
 
 for i in range(1,num_of_features):
     
@@ -119,27 +147,40 @@ for i in range(1,num_of_features):
     
     pca_beta = pca.components_
     
-    train, test = train_test_split(
-        data_feature_selected,
+    X_train, X_test, y_train, y_test = train_test_split(
+        data_pca,
+        data_feature_selected['Violent_Crimes_Per_1000'],
         test_size=0.3,
         random_state=0)
     
-    X_train = train.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
-    y_train = train['Violent_Crimes_Per_1000']
-    X_test = test.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
-    y_test = test['Violent_Crimes_Per_1000']
+    # X_train = train.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
+    # y_train = train['Violent_Crimes_Per_1000']
+    # X_test = test.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
+    # y_test = test['Violent_Crimes_Per_1000']
     
-    lr = LinearRegression()
+    # lr = LinearRegression()
+    lr = GradientBoostingRegressor(
+        learning_rate = .15,
+        n_estimators = 1000,
+        max_depth = 3,
+        # criterion = "mse",
+        random_state=0)
     lr.fit(X_train, y_train)
     y_predict = lr.predict(X_test)
     
-    results_of_pca.append([i, r2_score(y_test, y_predict)])
+    r2 = r2_score(y_test, y_predict)
+    if r2 > best_r2_pca:
+        best_r2_pca = r2
+        best_pca_model = pca
+        best_pca_data = data_pca
+    
+    results_of_pca.append([i, r2])
 
 results_of_pca = np.array(results_of_pca)
 
 fig = plt.figure()
 plt.plot(results_of_pca[:,0], results_of_pca[:,1])
-plt.title("PCA")
+plt.title("PCA - with Gradient Boosting")
 plt.xlabel("Feature Selection")
 plt.ylabel("R2")
     
@@ -153,6 +194,9 @@ from sklearn.linear_model import LinearRegression
 num_of_features = data_feature_selected.shape[1] - 1
 
 results_of_nmf = []
+best_nmf_model = None
+best_nmf_data = None
+best_r2_nmf = 0
 
 for i in range(1,num_of_features):
     
@@ -162,35 +206,47 @@ for i in range(1,num_of_features):
     
     nmf_beta = nmf.components_
     
-    train, test = train_test_split(
-        data_feature_selected,
+    X_train, X_test, y_train, y_test = train_test_split(
+        data_nmf,
+        data_feature_selected['Violent_Crimes_Per_1000'],
         test_size=0.3,
         random_state=0)
     
-    X_train = train.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
-    y_train = train['Violent_Crimes_Per_1000']
-    X_test = test.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
-    y_test = test['Violent_Crimes_Per_1000']
-    # X_train = np.nan_to_num(X_train)
-    # X_test = np.nan_to_num(X_test)
+    # X_train = train.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
+    # y_train = train['Violent_Crimes_Per_1000']
+    # X_test = test.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
+    # y_test = test['Violent_Crimes_Per_1000']
+    # # X_train = np.nan_to_num(X_train)
+    # # X_test = np.nan_to_num(X_test)
     
-    lr = LinearRegression()
+    # lr = LinearRegression()
+    lr = GradientBoostingRegressor(
+        learning_rate = .15,
+        n_estimators = 1000,
+        max_depth = 3,
+        # criterion = "mse",
+        random_state=0)
     lr.fit(X_train, y_train)
     y_predict = lr.predict(X_test)
+    r2 = r2_score(y_test, y_predict)
     
-    results_of_nmf.append([i, r2_score(y_test, y_predict)])
+    
+    if r2 > best_r2_nmf:
+        best_r2_nmf = r2
+        best_nmf_model = nmf
+        best_nmf_data = data_nmf
+    
+    results_of_nmf.append([i, r2])
 
 results_of_nmf = np.array(results_of_nmf)
 
 fig = plt.figure()
 plt.plot(results_of_nmf[:,0], results_of_nmf[:,1])   
-plt.title("NMF")
+plt.title("NMF - with Gradient Boosting")
 plt.xlabel("Feature Selection")
 plt.ylabel("R2")
     
 #%% Gradient Boosting
-
-from sklearn.ensemble import GradientBoostingRegressor
 
 
 
@@ -208,63 +264,16 @@ y_train = train['Violent_Crimes_Per_1000']
 X_test = test.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
 y_test = test['Violent_Crimes_Per_1000']
 
-gbr = GradientBoostingRegressor(
-    learning_rate = .15,
-    n_estimators = 1000,
-    max_depth = 3,
-    # criterion = "mse",
-    random_state=0)
-gbr.fit(X_train, y_train)
-y_predict = gbr.predict(X_test)
-print(r2_score(y_test, y_predict))
+lasso_r2 = gradient_boosting(X_train, y_train, X_test, y_test, "Lasso")
 
-fig = plt.figure()
-plt.xlim(0,10)
-plt.ylim(0,10)
-plt.scatter(test['Violent_Crimes_Per_1000'], y_predict)
-plt.xlabel("Crime Rate per 1000")
-plt.ylabel("Predicted Crime Rate per 1000")
-plt.title("Gradient Boost")
-    
-#%% Bagggings
-# from sklearn.ensemble import BaggingRegressor
+print("Gradient Boosted Results")
+print("Best Lasso R2: %f" % lasso_r2)
+print("Best PCA R2: %f" % best_r2_pca)
+print("Best NMF R2: %f" % best_r2_nmf)
 
-
-# train, test = train_test_split(
-#     data_feature_selected,
-#     # data.drop(columns=['Violent_Crimes_Per_1000'], axis=1),
-#     # data['Violent_Crimes_Per_1000'],
-#     # data_pca,
-#     # data.target,
-#     test_size=0.3,
-#     random_state=0)
-
-# X_train = train.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
-# y_train = train['Violent_Crimes_Per_1000']
-# X_test = test.drop(columns=['Violent_Crimes_Per_1000'], axis=1)
-# y_test = test['Violent_Crimes_Per_1000']
-
-
-
-# br = BaggingRegressor(
-#     # max_samples = 10,
-#     max_features = X_train.shape[1] - 5,
-#     random_state = 0 
-#     )
-    
-# br.fit(X_train, y_train)
-# y_predict = br.predict(X_test)
-# print(r2_score(y_test, y_predict))
-
-# fig = plt.figure()
-# plt.xlim(0,10)
-# plt.ylim(0,10)
-# plt.scatter(test['Violent_Crimes_Per_1000'], y_predict)
-    
-    
-    
-    
-    
-    
-    
+#%% Intrepret SVM results
+data_columns = np.array(data_feature_selected.columns.array)
+for component in best_nmf_model.components_:
+    component = np.append(component, [0])
+    data_columns[component > 0]
     

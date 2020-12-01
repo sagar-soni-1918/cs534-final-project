@@ -72,7 +72,9 @@ def education_by_county(education_dict):
 
 
 def combine_crime_edu(crime, education, year_delta = 0):
-    
+    if year_delta == None:
+        year_delta = 0
+        
     crime_year = first_crime_data_year + year_delta
     education_year = first_edu_data_year
     

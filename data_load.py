@@ -4,7 +4,7 @@ import pandas as pd
 
 # %% load all data frames for desired years
 
-def load_crime_education_data(year_delta):
+def load_crime_education_data(year_delta = 0):
     years = range(1998,2002+1)
     edu_spend_df_dict = ut.load_edu_spend_years(years)
     crime_dict = ut.load_crime_data(2017)
