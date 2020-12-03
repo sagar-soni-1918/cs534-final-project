@@ -217,7 +217,7 @@ def run_NMF(data_feature_selected):
     return best_r2_nmf, best_nmf_data, best_nmf_model
 
 
-def run_function(year_delay = 4):
+def main_run_function(year_delay = 4):
     # year_delay = 4
     data = load_crime_education_data(year_delay)
     
@@ -258,10 +258,10 @@ def plot_time_delay_results(results):
 # if multi year delays wants to be run, then un comment the code below and comment out line 251 
 results = []
 # for year_delay in range(0,9):
-#     run_function(year_delay)
+#     main_run_function(year_delay)
 # plot_time_delay_results(results)
     
-run_function()    
+main_run_function()    
 print(results)
 
 

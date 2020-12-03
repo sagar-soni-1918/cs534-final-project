@@ -15,8 +15,20 @@ We invite you to explore the scripts and functions we have written, so you can g
 We provide scripts for plotting and comparison of modeling performance and feature selection across these approaches.
 
 ## How to Use:
-Below is a list of the main functions in our repo, and a brief description of what each one does.
-  1. 
-  2. 
+Below is a list of the main functions and scripts in our repo, and a brief description of what each one does.
+  1. **main_data_exploration.py**
+      - Function may be run from top to bottom, as is, to get R2 values for the best Lasso, PCA, and NMF parameters.
+      - You may also plot the results across many fits by enabling the _plot_time_delay_results()_ function at the end of the script, if desired
+  2. **data_exploration_all_plots.py**
+      - This function is very similar to the above, but includes plotting by default 
+      - This will output all grid search results and R2 values across numbers of dropped features that result in the "Best Fit" solutions
+  3. **human_selected_variables.py**
+      - This function loads all the data and runs a similar analysis on variables selected by us to try to "guess" which variables would be most predictive.
+      - Feel free to try your own guesses!
+  4. **edu_data_load.py**
+      - This function will load the education spending data into a Pandas DataFrame for use in other scripts
+  5. **data_load.py**
+      - This function loads both the crime data and the education spending data into a common output DataFrame.
+      - It also contains a function for scaling all spending features by the total revenue for each school district (for normalization)
 
 ## Evaluation:
