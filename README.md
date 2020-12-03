@@ -32,3 +32,5 @@ Below is a list of the main functions and scripts in our repo, and a brief descr
       - It also contains a function for scaling all spending features by the total revenue for each school district (for normalization)
 
 ## Evaluation:
+
+Out of the original 131 features 
