@@ -15,8 +15,29 @@ We invite you to explore the scripts and functions we have written, so you can g
 We provide scripts for plotting and comparison of modeling performance and feature selection across these approaches.
 
 ## How to Use:
-Below is a list of the main functions in our repo, and a brief description of what each one does.
-  1. 
-  2. 
+Below is a list of the main functions and scripts in our repo, and a brief description of what each one does.
+  1. **main_data_exploration.py**
+      - Function may be run from top to bottom, as is, to get R2 values for the best Lasso, PCA, and NMF parameters.
+      - You may also plot the results across many fits by enabling the _plot_time_delay_results()_ function at the end of the script, if desired
+  2. **data_exploration_all_plots.py**
+      - This function is very similar to the above, but includes plotting by default 
+      - This will output all grid search results and R2 values across numbers of dropped features that result in the "Best Fit" solutions
+  3. **human_selected_variables.py**
+      - This function loads all the data and runs a similar analysis on variables selected by us to try to "guess" which variables would be most predictive.
+      - Feel free to try your own guesses!
+  4. **edu_data_load.py**
+      - This function will load the education spending data into a Pandas DataFrame for use in other scripts
+  5. **data_load.py**
+      - This function loads both the crime data and the education spending data into a common output DataFrame.
+      - It also contains a function for scaling all spending features by the total revenue for each school district (for normalization)
 
-## Evaluation:
+
+## Evaluation and Discussion:
+
+Out of 131 education spend categories, the final results yield 10-15 features that significantly affect violent crime rates (murder, rape, aggravated assault). A few of these features include tuition fees to pupils/parents, school lunch revenues, total employee benefits (instruction), and payments to other school systems. LASSO regression was used as a baseline dimensional reduction with SVM and NMF following up in series. The baseline time delay was 11 years as education spend was averaged from all K-12 years and a subsequent addition of 0 to 8 years was evaluated across all reduction techiniques using SSE as the error measurement. 15 years total proved to show the highest correlation between education spend and violet crime data. 
+
+![](cs534-final-project/blob/main/Presentation/reduction.png?raw=true)
+
+A handpicked set of 30 features also ran through these techniques. Features such as Instructor salaries, employee benefits, property taxes, and federal revenue through state seemed intuitively important to potential violent crime potential and were measured against the total lasso with no handpicking with vastly different results. Some features did not total 1% of spend and other features, like employee benefits actually turned out to have the opposite relationship as intuitively thought (more benefits actually --> more violent crime). 
+
+Of features that totaled more than 1% of federal spend, 3 stood out. Total salaries and wages - student transportation, total salaries and wages - instructional staff support, and total salaries and wages - food services. Food services had a positive beta of 35, suggesting that with each 1% increase compared to Total Revenue, a random county should see an *increase* of 35 violent crimes.  The theory behind this phenomenom is that lower income areas (strong correlation to high violent crime rates) have subsidized school lunches for the students and must therefore pay extra for food services wages. The other two standout features had strong negative betas, suggesting an inverse relationship to violent crime rates as one might intuitively think. 

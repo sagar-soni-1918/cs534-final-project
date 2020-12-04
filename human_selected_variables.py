@@ -216,12 +216,13 @@ print(results)
 #     data_columns[component > 0]
 #%%
 
-results = np.array(results)
+# results = np.array(results)
 
-plt.subplot()
-plt.plot(results[:,0],results[:,1], label ="Lasso")
-plt.plot(results[:,0],results[:,2], label ="PCA")
-plt.plot(results[:,0],results[:,3], label ="NMF")
-plt.xlabel("Year Delay")
-plt.ylabel("R Squared")
-plt.legend()
+# plt.subplot()
+# plt.plot(results[:,0],results[:,1], label ="Lasso")
+# plt.plot(results[:,0],results[:,2], label ="PCA")
+# plt.plot(results[:,0],results[:,3], label ="NMF")
+# plt.xlabel("Year Delay")
+# plt.ylabel("R Squared")
+# plt.legend()
+# plt.show()
