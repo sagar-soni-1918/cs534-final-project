@@ -42,4 +42,4 @@ A handpicked set of 30 features also ran through these techniques. Features such
 
 Of features that totaled more than 1% of federal spend, 3 stood out. Total salaries and wages - student transportation, total salaries and wages - instructional staff support, and total salaries and wages - food services. Food services had a positive beta of 35, suggesting that with each 1% increase compared to Total Revenue, a random county should see an *increase* of 35 violent crimes.  The theory behind this phenomenom is that lower income areas (strong correlation to high violent crime rates) have subsidized school lunches for the students and must therefore pay extra for food services wages. The other two standout features had strong negative betas, suggesting an inverse relationship to violent crime rates as one might intuitively think. 
 
-![](https://github.com/sagar-soni-1918/cs534-final-project/blob/main/Presentation/betas.png?raw=true)
+![End results](https://github.com/sagar-soni-1918/cs534-final-project/blob/main/Presentation/betas.png?raw=true)
