@@ -36,4 +36,4 @@ Below is a list of the main functions and scripts in our repo, and a brief descr
 
 Out of 131 education spend categories, the final results yield 10-15 features that significantly affect violent crime rates (murder, rape, aggravated assault). A few of these features include tuition fees to pupils/parents, school lunch revenues, total employee benefits (instruction), and payments to other school systems. 
 
-![](cs534-final-project/blob/main/Presentation/image (1).png?raw=true)
+![](cs534-final-project/blob/main/Presentation/reduction.png?raw=true)
