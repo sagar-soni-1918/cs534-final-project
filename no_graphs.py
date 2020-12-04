@@ -33,7 +33,10 @@ def gradient_boosting(X_train, y_train, X_test, y_test, title = ''):
 def clean_data(data , variable_selection = None):
     # This function takes in the data and removes variables based on the variable selection setting
     # data is a pandas dataframe
-    # variable selection can be none which is a standard removal of most revenue items, human_selected which removes all variables not selected by us, non_demo_variables which removes all varaibles which we believe can be influenced by the demographics
+    # variable selection can be 
+        # none which is a standard removal of most revenue items, 
+        # human_selected which removes all variables not selected by us, 
+        # non_demo_variables which removes all varaibles which we believe can be influenced by the demographics
     # function returns the pandas dataframe with the variables removed and the crime rate normalized by crime per 1000 people
 
     data = data.drop(columns=['MURDER','RAPE','ROBBERY','AGGRAV','BURGLARY','LARCENY','MOTOR','ARSON','INDEX','%OF','STATE','IDCENSUS','FIPS','SCHLEV','WEIGHT', 'COUNTY', 'YRDAT', 'V33'])
@@ -221,7 +224,7 @@ def run_function(year_delay = 4):
     # year_delay = 4
     data = load_crime_education_data(year_delay)
     
-    data = clean_data(data)
+    data = clean_data(data, None)
 
     # Run a lasso model to do feature selection
     features_we_like, data_feature_selected, lasso_r2 = run_lasso(data)
