@@ -31,6 +31,9 @@ Below is a list of the main functions and scripts in our repo, and a brief descr
       - This function loads both the crime data and the education spending data into a common output DataFrame.
       - It also contains a function for scaling all spending features by the total revenue for each school district (for normalization)
 
-## Evaluation:
 
-Out of the original 131 features 
+## Evaluation and Discussion:
+
+Out of 131 education spend categories, the final results yield 10-15 features that significantly affect violent crime rates (murder, rape, aggravated assault). A few of these features include tuition fees to pupils/parents, school lunch revenues, total employee benefits (instruction), and payments to other school systems. 
+
+![](cs534-final-project/blob/main/Presentation/image%20(1).png?raw=true)
