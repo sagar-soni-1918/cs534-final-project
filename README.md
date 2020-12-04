@@ -36,7 +36,7 @@ Below is a list of the main functions and scripts in our repo, and a brief descr
 
 Out of 131 education spend categories, the final results yield 10-15 features that significantly affect violent crime rates (murder, rape, aggravated assault). A few of these features include tuition fees to pupils/parents, school lunch revenues, total employee benefits (instruction), and payments to other school systems. LASSO regression was used as a baseline dimensional reduction with SVM and NMF following up in series. The baseline time delay was 11 years as education spend was averaged from all K-12 years and a subsequent addition of 0 to 8 years was evaluated across all reduction techiniques using SSE as the error measurement. 15 years total proved to show the highest correlation between education spend and violet crime data. 
 
-![](cs534-final-project/blob/main/Presentation/reduction.png?raw=true)
+![Models Compared](https://github.com/sagar-soni-1918/cs534-final-project/blob/main/Presentation/reduction.png?raw=true)
 
 A handpicked set of 30 features also ran through these techniques. Features such as Instructor salaries, employee benefits, property taxes, and federal revenue through state seemed intuitively important to potential violent crime potential and were measured against the total lasso with no handpicking with vastly different results. Some features did not total 1% of spend and other features, like employee benefits actually turned out to have the opposite relationship as intuitively thought (more benefits actually --> more violent crime). 
 
